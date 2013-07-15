@@ -1,0 +1,40 @@
+1.车系是通过 div.daohang>a[href^=http://www.51auto.com/search/s-] 去掉 "二手" 两个字后,后得到的车系信息
+
+2.发布日期是通过拼接
+http://www.51auto.com/dwr/exec/CarViewAJAX.getCarInfoNew?callCount=1&c0-scriptName=CarViewAJAX&c0-methodName=getCarInfoNew&c0-id=718_1373617483103&c0-param0=number:{carid}&xml=true
+在carid中填对于的车的ID。
+得到类似下面的返回：
+	var s0=[];var s1="228";s0[0]=s1;
+	var s2=".51auto.com";s0[1]=s2;
+	var s3="1772764####http%3A%2F%2Fwww.51auto.com%2Fbuycar%2F1772764.html####http://picture.51auto.com/ad/201306/30/pic820130630142539-PvUs2-micro.jpg####1.0####\u81EA\u52A8####\u957F\u5B89\u4E4B\u661F####----####----####5.20::::";s0[2]=s3;
+	var s4=null;s0[3]=s4;
+	var s5="2013-07-01";s0[4]=s5;
+	var s6="";s0[5]=s6;
+	s0[6]=s6;
+	s0[7]=s6;
+	var s7="n";s0[8]=s7;
+	s0[9]=s6;
+	s0[10]=s6;
+	DWREngine._handleResponse('718_1373617483103', s0);
+则s0[4]为发布日期
+
+3.页面抓取顺序如下：
+	<1>.城市列表页面，选取配置中的城市。http://www.51auto.com/morecity.htm
+	<2>.每个城市有个人和商户两个子list页面。
+		商户--> http://www.51auto.com/search/beijing/pabmdcig3f/?complexSort=publishTime
+		个人--> http://www.51auto.com/search/beijing/pabmdcig2f/?complexSort=publishTime
+	
+4.进入 detail 页面，做若干逻辑判断。
+	http://www.51auto.com/buycar/1777633.html
+	1777633 为 CarID
+	
+5.进入 抓取declaredate页面，解析出发布时间
+	http://www.51auto.com/dwr/exec/CarViewAJAX.getCarInfoNew?callCount=1&c0-scriptName=CarViewAJAX&c0-methodName=getCarInfoNew&c0-id=718_1373617483103&c0-param0=number:{CarID}&xml=true
+	
+6.个人车源无商户页面，直接保存。进入 商户车源进入商户页面，分如下两种判断：
+	<1>. http://www.51auto.com/dealers/75339.html 普通商户。直接抓取商户信息
+	<2>. http://www.51auto.com/hclist__HAPU__157184_UI__209656/ 类似的链接，跳转到
+		http://www.51auto.com/control/HappyDealersList?p=p&zoneID=-1&zoneID=-1&happyUserId=157184&sort=-1&keyWord={ShopName}&level=-1&page=1
+	
+
+	
