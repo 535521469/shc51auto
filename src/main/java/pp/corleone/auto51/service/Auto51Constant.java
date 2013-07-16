@@ -76,13 +76,10 @@ public class Auto51Constant {
 	public final static String LIST = "LIST";
 	public final static String DETAIL = "DETAIL";
 	public final static String CAR_INFO = "CARINFO";
+	public final static String SELLER_INFO = "SELLER_INFO";
 
 	public final static String BUILD_ALL_PAGE = "BUILD_ALL_PAGE";
 	
-	
-	
-	public final static String SELLER_INFO = "SELLER_INFO";
-
 	private static String buildCityUrl(String url) {
 		String city = url.replace(homePage, "");
 		return homePage + "search/" + city;

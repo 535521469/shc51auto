@@ -123,7 +123,17 @@ public class Auto51DetailCallback extends DefaultCallback {
 
 		Document doc = ((DefaultResponseWrapper) this.getResponseWrapper())
 				.getDoc();
-		Auto51CarInfo auto51CarInfo = auto51DetailExtracter.getCarInfo(doc);
+
+		Auto51CarInfo auto51CarInfo;
+		try {
+			auto51CarInfo = auto51DetailExtracter.getCarInfo(doc);
+		} catch (Exception e) {
+			getLogger().error(
+					"extract detail error,"
+							+ this.getResponseWrapper().getUrl());
+			e.printStackTrace();
+			throw e;
+		}
 		this.copyCarValues(auto51CarInfo, aci);
 
 		if (auto51CarInfo.getSellerType() == Auto51SellerType.SHOP.getCode()) {

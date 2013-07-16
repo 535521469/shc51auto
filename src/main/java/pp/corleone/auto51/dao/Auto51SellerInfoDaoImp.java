@@ -32,16 +32,6 @@ public class Auto51SellerInfoDaoImp implements Auto51SellerInfoDao {
 	@Override
 	public Auto51SellerInfo listByName(String sellerName) {
 
-		/**
-		 * Query query = this.entityManager .createQuery(
-		 * "from Auto51CarInfo as c where c.carSourceUrl=:carSourceUrl ");
-		 * query.setParameter("carSourceUrl", url);
-		 * 
-		 * @SuppressWarnings("unchecked") List<Auto51CarInfo> auto51CarInfos =
-		 *                                (List<Auto51CarInfo>) query
-		 *                                .getResultList(); return
-		 *                                auto51CarInfos;
-		 */
 		Query query = this.entityManager
 				.createQuery("from Auto51SellerInfo as s where s.shopName=:shopName ");
 		query.setParameter("shopName", sellerName);
@@ -55,5 +45,13 @@ public class Auto51SellerInfoDaoImp implements Auto51SellerInfoDao {
 		}
 
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Auto51SellerInfo> listIncompletedSellers() {
+		Query query = this.entityManager
+				.createQuery("from Auto51SellerInfo as s where s.shopAddress is null");
+		return (List<Auto51SellerInfo>) query.getResultList();
 	}
 }

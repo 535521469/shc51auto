@@ -96,7 +96,7 @@ public class Auto51ChangeCityCallback extends DefaultCallback {
 							.getResponseWrapper().getReferRequestWrapper(),
 					PriorityEnum.LIST);
 			shop.getContext().put(Auto51Constant.CAR_INFO, ici);
-			shop.getContext().put(Auto51Constant.BUILD_ALL_PAGE, 1);
+			shop.getContext().put(Auto51Constant.BUILD_ALL_PAGE, "1");
 
 			DefaultFetcher fetcher = (DefaultFetcher) Auto51Constant
 					.getInstance().getBean("auto51ListFetcher");
@@ -130,8 +130,6 @@ public class Auto51ChangeCityCallback extends DefaultCallback {
 		Document doc = ((DefaultResponseWrapper) this.getResponseWrapper())
 				.getDoc();
 
-		// Map<String, Element> cityMap = this.buildCityMap(doc);
-		// Map<String, String> cityUrlMap = this.buildCityUrlMap(cityMap);
 		Map<String, String> cityUrlMap = auto51ChangeCityExtracter
 				.buildCityUrlMap(doc, this.getCities());
 

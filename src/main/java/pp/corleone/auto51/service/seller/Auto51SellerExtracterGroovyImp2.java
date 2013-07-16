@@ -3,7 +3,6 @@ package pp.corleone.auto51.service.seller;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.stereotype.Component;
 
 import pp.corleone.auto51.domain.Auto51SellerInfo;
 
@@ -18,6 +17,8 @@ public class Auto51SellerExtracterGroovyImp2 implements Auto51SellerExtracter {
 		} else {
 			this.fillSpecialSellerInfo(doc, auto51SellerInfo);
 			this.fillSpecialSellerInfo2(doc, auto51SellerInfo);
+			this.fillSpecialSellerInfo3(doc, auto51SellerInfo);
+			this.fillSpecialSellerInfo4(doc, auto51SellerInfo);
 		}
 	}
 
@@ -58,7 +59,6 @@ public class Auto51SellerExtracterGroovyImp2 implements Auto51SellerExtracter {
 	// </ul>
 	protected void fillSpecialSellerInfo2(Document doc,
 			Auto51SellerInfo auto51SellerInfo) {
-
 		if (auto51SellerInfo.getShopAddress() == null) {
 			Element divElement = doc.select("ul.ul_row").first();
 			if (divElement != null) {
@@ -86,6 +86,103 @@ public class Auto51SellerExtracterGroovyImp2 implements Auto51SellerExtracter {
 					}
 				}
 			}
+		}
+	}
+
+	/**
+	 * <div class="carinfo jxsinfo">
+	 * <p class="jxs">
+	 * <b><a href=
+	 * "http://www.51auto.com/hcarlist_-1_-1_-1_-1_234927_-1_-1_593073_-1_-1_10_1/"
+	 * target="_blank">浙江康桥锦澳汽车销售服务有限公司</a></b>
+	 * </p>
+	 * <p class="jxs">
+	 * 地址：浙江省杭州市临平藕花洲大街西段151号
+	 * </p>
+	 * <p class="jxs">
+	 * 邮编：310000
+	 * </p>
+	 * <p class="jxs">
+	 * 联系人：方志强
+	 * </p>
+	 * <p class="jxs">
+	 * 联系电话：0571-89366060
+	 * </p>
+	 * <p class="jxs">
+	 * 电子邮件：ashenyulian@163.com
+	 * </p>
+	 * </div>
+	 * 
+	 * @param doc
+	 * @param auto51SellerInfo
+	 */
+	protected void fillSpecialSellerInfo3(Document doc,
+			Auto51SellerInfo auto51SellerInfo) {
+		if (auto51SellerInfo.getShopAddress() == null) {
+			Elements pElements = doc.select("p.jxs");
+
+			String phoneString = "联系电话：";
+			String contacterString = "联系人：";
+			String addressString = "地址：";
+			for (Element pElement : pElements) {
+				String info = pElement.text();
+				if (info.startsWith(addressString)) {
+					auto51SellerInfo.setShopAddress(info.replace(addressString,
+							"").trim());
+				} else if (info.startsWith(contacterString)) {
+					auto51SellerInfo.setContacter(info.replace(contacterString,
+							"").trim());
+				} else if (info.startsWith(phoneString)) {
+					auto51SellerInfo.setContactPhone(info.replace(phoneString,
+							"").trim());
+				}
+			}
+		}
+	}
+
+	/**
+	 * <dl class="">
+	    	    <dt> <span class="auto2">
+	    	              <a href="http://www.51auto.com/hcarlist_-1_-1_-1_-1_427821_-1_-1_604070_-1_-1_10_1/" target="_blank">
+	    	             <img width="120" height="90">
+	    	             </a> 
+	    	         </span> </dt>
+	    	    <dd class="de">
+	    	      <h2><a href="http://www.51auto.com/hcarlist_-1_-1_-1_-1_427821_-1_-1_604070_-1_-1_10_1/" target="_blank">尊荣亿方集团有限公司</a></h2>
+	              <p>地址：大连市保税区海天路九号/大连市沙河口区集贤街25—31号（华邦上都A座一楼）</p>
+	              <p>联系人：李晓宁</p>
+	            </dd>
+	    	    <dd class="price">
+	    	      <p>
+	              	<span class="pa">邮编：  </span>
+	                <span class="pa">联系电话：13610950550 </span>
+	              </p>
+	    	    </dd>
+	  	    </dl>
+	 * @param doc
+	 * @param auto51SellerInfo
+	 */
+	protected void fillSpecialSellerInfo4(Document doc,
+			Auto51SellerInfo auto51SellerInfo) {
+		if (auto51SellerInfo.getShopAddress() == null) {
+			Elements pElements = doc.select("span.pa , dd.de>p");
+			String phoneString = "联系电话：";
+			String contacterString = "联系人：";
+			String addressString = "地址：";
+			for (Element pElement : pElements) {
+				String info = pElement.text();
+				if (info.startsWith(addressString)) {
+					auto51SellerInfo.setShopAddress(info.replace(addressString,
+							"").trim());
+				} else if (info.startsWith(contacterString)) {
+					auto51SellerInfo.setContacter(info.replace(contacterString,
+							"").trim());
+				} else if (info.startsWith(phoneString)) {
+					auto51SellerInfo.setContactPhone(info.replace(phoneString,
+							"").trim());
+				}
+			}
+
 		}
 	}
 

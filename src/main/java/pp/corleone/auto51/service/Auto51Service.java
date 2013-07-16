@@ -19,7 +19,9 @@ import org.slf4j.LoggerFactory;
 import pp.corleone.auto51.StatusRequestWrapper;
 import pp.corleone.auto51.domain.Auto51CarInfo;
 import pp.corleone.auto51.domain.Auto51CarInfo.Auto51StatusCode;
+import pp.corleone.auto51.domain.Auto51SellerInfo;
 import pp.corleone.auto51.service.changecity.Auto51ChangeCityCallback;
+import pp.corleone.auto51.service.seller.fill.Auto51SellerInCompletedQuery;
 import pp.corleone.auto51.service.status.Auto51OnlineQuery;
 import pp.corleone.auto51.service.status.Auto51StatusCallback;
 import pp.corleone.service.Callback;
@@ -44,9 +46,9 @@ public class Auto51Service extends Service {
 				Auto51Constant.STATUS_CHECK_FLAG, "1");
 		String fetchFlag = Auto51Constant.getInstance().getProperty(
 				Auto51Constant.ONGOING_FLAG, "1");
-		 if ("1".equals(fetchFlag)) {
-		 is.initOnGoing();
-		 }
+		if ("1".equals(fetchFlag)) {
+			is.initOnGoing();
+		}
 		if ("1".equals(statusCheckFlag)) {
 			is.initStatusCheck();
 			is.statusFetch();
@@ -101,6 +103,55 @@ public class Auto51Service extends Service {
 			return LoggerFactory.getLogger(this.getClass());
 		}
 
+		private Fetcher buildChangeCityFetcher(Set<String> cities) {
+			Auto51ChangeCityCallback callback = (Auto51ChangeCityCallback) Auto51Constant
+					.getInstance().getBean("auto51ChangeCityCallback");
+			callback.setCities(cities);
+
+			// DefaultRequestWrapper drw = (DefaultRequestWrapper)
+			// Auto51Constant
+			// .getInstance().getBean("defaultRequestWrapper");
+			// drw.setUrl(Auto51Constant.homePage + "morecity.htm");
+			// drw.setCallback(callback);
+			// drw.setPriority(PriorityEnum.CHANGE_CITY.getValue());
+			// drw.setTimeout(30000);
+
+			DefaultRequestWrapper drw = new DefaultRequestWrapper(
+					Auto51Constant.homePage + "morecity.htm", callback, null,
+					PriorityEnum.CHANGE_CITY);
+
+			DefaultFetcher f = (DefaultFetcher) Auto51Constant.getInstance()
+					.getBean("auto51ChangeCityFetcher");
+			f.setRequestWrapper(drw);
+			return f;
+		}
+
+		private List<Fetcher> buildIncompletedSellerFetcher(
+				List<Auto51SellerInfo> sellers) {
+
+			List<Fetcher> fetchers = new ArrayList<Fetcher>();
+			for (Auto51SellerInfo auto51SellerInfo : sellers) {
+
+				Callback callback = (Callback) Auto51Constant.getInstance()
+						.getBean("auto51SellerFillCallback");
+
+				DefaultRequestWrapper drw = new DefaultRequestWrapper(
+						auto51SellerInfo.getShopUrl(), callback, null,
+						PriorityEnum.SELLER);
+
+				drw.getContext().put(Auto51Constant.SELLER_INFO,
+						auto51SellerInfo);
+
+				drw.setTimeout(30000);
+
+				DefaultFetcher f = (DefaultFetcher) Auto51Constant
+						.getInstance().getBean("auto51SellerFillFetcher");
+				f.setRequestWrapper(drw);
+				fetchers.add(f);
+			}
+			return fetchers;
+		}
+
 		@Override
 		public void run() {
 
@@ -110,24 +161,25 @@ public class Auto51Service extends Service {
 			this.getLogger().info("get cities config ->" + city);
 			Set<String> cities = new HashSet<String>(Arrays.asList(city
 					.split(",")));
-			List<DefaultFetcher> fs = new ArrayList<DefaultFetcher>();
+			List<Fetcher> fs = new ArrayList<Fetcher>();
 
-			// add change city fetcher
 			try {
-				Auto51ChangeCityCallback callback = (Auto51ChangeCityCallback) Auto51Constant
-						.getInstance().getBean("auto51ChangeCityCallback");
-				callback.setCities(cities);
+				// add incompleted seller fill fetcher
+				Auto51SellerInCompletedQuery auto51SellerInCompletedQuery = (Auto51SellerInCompletedQuery) Auto51Constant
+						.getInstance().getBean("auto51SellerInCompletedQuery");
+				List<Auto51SellerInfo> auto51SellerInfos = auto51SellerInCompletedQuery
+						.listIncompletedSellers();
+				List<Fetcher> incompletedSellerFetchers = this
+						.buildIncompletedSellerFetcher(auto51SellerInfos);
 
-				DefaultRequestWrapper drw = (DefaultRequestWrapper) Auto51Constant
-						.getInstance().getBean("defaultRequestWrapper");
-				drw.setUrl(Auto51Constant.homePage + "morecity.htm");
-				drw.setCallback(callback);
-				drw.setPriority(PriorityEnum.CHANGE_CITY.getValue());
-				drw.setTimeout(30000);
+				this.getLogger().info(
+						"get " + incompletedSellerFetchers.size()
+								+ " incompleted sellers");
 
-				DefaultFetcher f = (DefaultFetcher) Auto51Constant
-						.getInstance().getBean("auto51ChangeCityFetcher");
-				f.setRequestWrapper(drw);
+				fs.addAll(incompletedSellerFetchers);
+
+				// add change city fetcher
+				Fetcher f = this.buildChangeCityFetcher(cities);
 				fs.add(f);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -264,8 +316,8 @@ public class Auto51Service extends Service {
 
 			Auto51Resource.fetchQueue.addAll(fetchers);
 
-			getLogger().info("add "+fetchers.size()+" to queue");
-			
+			getLogger().info("add " + fetchers.size() + " to queue");
+
 		}
 	}
 }
