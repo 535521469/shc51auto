@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import pp.corleone.Log;
 import pp.corleone.auto51.dao.Auto51CarInfoDao;
 import pp.corleone.auto51.domain.Auto51CarInfo;
 import pp.corleone.auto51.domain.Auto51CarInfo.Auto51StatusCode;
@@ -71,11 +72,11 @@ public class Auto51StatusCallback extends DefaultCallback {
 
 		if (isOnline) {
 			car.setLastActiveDate(new Date());
-			getLogger().info(car.getSeqID()+" online");
+			Log.info(car.getSeqID()+" online");
 		} else {
 			car.setStatusType(Auto51StatusCode.STATUS_TYPE_SOLD);
 			car.setOfflineDate(new Date());
-			getLogger().info(car.getSeqID()+" offline");
+			Log.info(car.getSeqID()+" offline");
 		}
 
 		return null;

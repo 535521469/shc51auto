@@ -13,7 +13,6 @@
 	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 	http://www.springframework.org/schema/lang
 	http://www.springframework.org/schema/lang/spring-lang.xsd">
-
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -71,11 +70,11 @@
 	<context:component-scan base-package="pp.corleone.service" />
 
 	<bean id="auto51ChangeCityExtracter"
-		class="pp.corleone.auto51.service.changecity.Auto51ChangeCityExtracterGroovyImp" />
+		class="pp.corleone.auto51.service.changecity.Auto51ChangeCityExtracterImp" />
 	<!-- <lang:groovy id="auto51ChangeCityExtracter" script-source="classpath:pp/corleone/auto51/service/changecity/Auto51ChangeCityExtracterGroovyImp.groovy"/> -->
 
 	<bean id="auto51ListExtracter"
-		class="pp.corleone.auto51.service.list.Auto51ListExtracterGroovyImp" />
+		class="pp.corleone.auto51.service.list.Auto51ListExtracterImp2" />
 	<bean id="auto51DetailExtracter"
 		class="pp.corleone.auto51.service.detail.Auto51DetailExtracterGroovyImp" />
 	<bean id="auto51DetailDeclareDateExtracter"

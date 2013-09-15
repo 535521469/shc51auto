@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import pp.corleone.Log;
 import pp.corleone.auto51.dao.Auto51CarInfoDao;
 import pp.corleone.auto51.dao.Auto51SellerInfoDao;
 import pp.corleone.auto51.domain.Auto51CarInfo;
@@ -99,7 +100,7 @@ public class Auto51SellerCallback extends DefaultCallback {
 				auto51CarInfo.getAuto51SellerInfo());
 
 		this.auto51CarInfoDao.persist(auto51CarInfo);
-		getLogger().info(
+		Log.info(
 				"save shop type car info..." + auto51CarInfo.getSeqID());
 
 		return fetched;

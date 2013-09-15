@@ -142,23 +142,27 @@ public class Auto51SellerExtracterGroovyImp2 implements Auto51SellerExtracter {
 
 	/**
 	 * <dl class="">
-	    	    <dt> <span class="auto2">
-	    	              <a href="http://www.51auto.com/hcarlist_-1_-1_-1_-1_427821_-1_-1_604070_-1_-1_10_1/" target="_blank">
-	    	             <img width="120" height="90">
-	    	             </a> 
-	    	         </span> </dt>
-	    	    <dd class="de">
-	    	      <h2><a href="http://www.51auto.com/hcarlist_-1_-1_-1_-1_427821_-1_-1_604070_-1_-1_10_1/" target="_blank">尊荣亿方集团有限公司</a></h2>
-	              <p>地址：大连市保税区海天路九号/大连市沙河口区集贤街25—31号（华邦上都A座一楼）</p>
-	              <p>联系人：李晓宁</p>
-	            </dd>
-	    	    <dd class="price">
-	    	      <p>
-	              	<span class="pa">邮编：  </span>
-	                <span class="pa">联系电话：13610950550 </span>
-	              </p>
-	    	    </dd>
-	  	    </dl>
+	 * <dt><span class="auto2"> <a href=
+	 * "http://www.51auto.com/hcarlist_-1_-1_-1_-1_427821_-1_-1_604070_-1_-1_10_1/"
+	 * target="_blank"> <img width="120" height="90"> </a> </span></dt>
+	 * <dd class="de">
+	 * <h2><a href=
+	 * "http://www.51auto.com/hcarlist_-1_-1_-1_-1_427821_-1_-1_604070_-1_-1_10_1/"
+	 * target="_blank">尊荣亿方集团有限公司</a></h2>
+	 * <p>
+	 * 地址：大连市保税区海天路九号/大连市沙河口区集贤街25—31号（华邦上都A座一楼）
+	 * </p>
+	 * <p>
+	 * 联系人：李晓宁
+	 * </p>
+	 * </dd>
+	 * <dd class="price">
+	 * <p>
+	 * <span class="pa">邮编： </span> <span class="pa">联系电话：13610950550 </span>
+	 * </p>
+	 * </dd>
+	 * </dl>
+	 * 
 	 * @param doc
 	 * @param auto51SellerInfo
 	 */

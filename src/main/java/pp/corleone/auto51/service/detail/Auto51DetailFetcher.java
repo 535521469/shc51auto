@@ -1,7 +1,5 @@
 package pp.corleone.auto51.service.detail;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -54,16 +52,5 @@ public class Auto51DetailFetcher extends DefaultFetcher {
 		return aci;
 	}
 
-	@Override
-	public boolean isIgnore() {
-		String url = this.getCarInfoInContext().getCarSourceUrl();
-		List<Auto51CarInfo> auto51CarInfos = this.auto51CarInfoDao
-				.listByUrl(url);
-		if (auto51CarInfos != null && auto51CarInfos.size() > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 }

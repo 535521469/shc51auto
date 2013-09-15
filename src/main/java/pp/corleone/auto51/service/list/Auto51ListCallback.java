@@ -76,15 +76,15 @@ public class Auto51ListCallback extends DefaultCallback {
 		return aci;
 	}
 
-	protected String getBuildAllPagesInContext() {
-		Map<String, Object> ctx = this.getResponseWrapper()
-				.getReferRequestWrapper().getContext();
-		if (ctx.containsKey(Auto51Constant.BUILD_ALL_PAGE)) {
-			return ctx.get(Auto51Constant.BUILD_ALL_PAGE).toString();
-		} else {
-			return "0";
-		}
-	}
+	// protected String getBuildAllPagesInContext() {
+	// Map<String, Object> ctx = this.getResponseWrapper()
+	// .getReferRequestWrapper().getContext();
+	// if (ctx.containsKey(Auto51Constant.BUILD_ALL_PAGE)) {
+	// return ctx.get(Auto51Constant.BUILD_ALL_PAGE).toString();
+	// } else {
+	// return "0";
+	// }
+	// }
 
 	protected Fetcher buildNextPageListFetcher(String nextPageUrl,
 			Auto51CarInfo auto51CarInfo) {
@@ -116,14 +116,23 @@ public class Auto51ListCallback extends DefaultCallback {
 			fetchers.add(this.buildFetcher(auto51CarInfo, detailUrl));
 		}
 
-		if (this.getBuildAllPagesInContext() == "1") {
+		if (Boolean.TRUE.equals(this.getResponseWrapper()
+				.getReferRequestWrapper().getContext()
+				.get(Auto51Constant.FIRST_PAGE))) {
+
 			List<String> nextPageUrls = this.auto51ListExtracter
 					.getNextPageUrls(doc);
 			nextPageUrls.remove(this.getResponseWrapper().getUrl());
 			if (nextPageUrls != null && nextPageUrls.size() > 0) {
 				for (String nextPageUrl : nextPageUrls) {
-					fetchers.add(buildNextPageListFetcher(nextPageUrl,
-							auto51CarInfo));
+
+					Fetcher listPageFetcher = buildNextPageListFetcher(
+							nextPageUrl, auto51CarInfo);
+
+					listPageFetcher.getRequestWrapper().getContext()
+							.put(Auto51Constant.FIRST_PAGE, false);
+
+					fetchers.add(listPageFetcher);
 				}
 			}
 		}
@@ -131,5 +140,4 @@ public class Auto51ListCallback extends DefaultCallback {
 		fetched.put(FetcherConstants.Fetcher, fetchers);
 		return fetched;
 	}
-
 }

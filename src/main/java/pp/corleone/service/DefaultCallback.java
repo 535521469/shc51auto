@@ -1,7 +1,5 @@
 package pp.corleone.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class DefaultCallback implements Callback {
 
@@ -16,8 +14,5 @@ public abstract class DefaultCallback implements Callback {
 		return this;
 	}
 
-	protected final Logger getLogger() {
-		return LoggerFactory.getLogger(this.getClass());
-	}
 
 }

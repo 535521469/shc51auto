@@ -11,6 +11,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import pp.corleone.Log;
 import pp.corleone.auto51.dao.Auto51CarInfoDao;
 import pp.corleone.auto51.dao.Auto51SellerInfoDao;
 import pp.corleone.auto51.domain.Auto51CarInfo;
@@ -128,7 +129,7 @@ public class Auto51DetailCallback extends DefaultCallback {
 		try {
 			auto51CarInfo = auto51DetailExtracter.getCarInfo(doc);
 		} catch (Exception e) {
-			getLogger().error(
+			Log.error(
 					"extract detail error,"
 							+ this.getResponseWrapper().getUrl());
 			e.printStackTrace();
@@ -148,7 +149,7 @@ public class Auto51DetailCallback extends DefaultCallback {
 					auto51CarInfo.setAuto51SellerInfo(existAuto51SellerInfo);
 				}
 			} else {
-				getLogger().error(
+				Log.error(
 						"shop seller type has no seller info,"
 								+ auto51CarInfo.getCarSourceUrl());
 				// auto51CarInfo=auto51DetailExtracter.getCarInfo(doc);

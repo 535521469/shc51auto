@@ -77,8 +77,9 @@ public class Auto51Constant {
 	public final static String DETAIL = "DETAIL";
 	public final static String CAR_INFO = "CARINFO";
 	public final static String SELLER_INFO = "SELLER_INFO";
+	public final static String FIRST_PAGE = "FIRST_PAGE";
 
-	public final static String BUILD_ALL_PAGE = "BUILD_ALL_PAGE";
+//	public final static String BUILD_ALL_PAGE = "BUILD_ALL_PAGE";
 	
 	private static String buildCityUrl(String url) {
 		String city = url.replace(homePage, "");
@@ -86,11 +87,11 @@ public class Auto51Constant {
 	}
 
 	public static String buildShopUrl(String url) {
-		return buildCityUrl(url) + "pabmdcig3f?complexSort=publishTime&page=1";
+		return buildCityUrl(url) + "pabmdcig3f?ordering=publishTime&page=1";
 	}
 
 	public static String buildPersonalUrl(String url) {
-		return buildCityUrl(url) + "pabmdcig2f?complexSort=publishTime&page=1";
+		return buildCityUrl(url) + "pabmdcig2f?ordering=publishTime&page=1";
 	}
 
 }

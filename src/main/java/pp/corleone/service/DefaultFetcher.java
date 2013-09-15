@@ -2,14 +2,10 @@ package pp.corleone.service;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import pp.corleone.Log;
 
 public abstract class DefaultFetcher implements Fetcher {
-
-	protected final Logger getLogger() {
-		return LoggerFactory.getLogger(this.getClass());
-	}
 
 	private RequestWrapper requestWrapper;
 
@@ -50,10 +46,9 @@ public abstract class DefaultFetcher implements Fetcher {
 		DefaultResponseWrapper rw = null;
 		if (!this.isIgnore()) {
 			String url = this.getRequestWrapper().getUrl();
-			getLogger().debug("crawl " + url);
+			Log.debug("crawl " + url);
 			Document doc;
 			try {
-
 				doc = Jsoup
 						.connect(url)
 						.timeout(this.getRequestWrapper().getTimeout())
@@ -62,10 +57,8 @@ public abstract class DefaultFetcher implements Fetcher {
 						.get();
 				rw = new DefaultResponseWrapper(doc, this.requestWrapper);
 			} catch (Exception e) {
-				getLogger().error(
-						"error url :" + url + ",fetcher:"
-								+ this.getClass().getName());
-				e.printStackTrace();
+				Log.error("error url :" + url + ",fetcher:"
+						+ this.getClass().getName(), e);
 			}
 
 		}

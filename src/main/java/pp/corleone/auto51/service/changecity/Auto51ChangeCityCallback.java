@@ -16,12 +16,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import pp.corleone.Log;
 import pp.corleone.auto51.domain.Auto51CarInfo;
 import pp.corleone.auto51.domain.Auto51CarInfo.Auto51SellerType;
 import pp.corleone.auto51.service.Auto51Constant;
+import pp.corleone.auto51.service.list.Auto51ListFetcher;
 import pp.corleone.service.Callback;
 import pp.corleone.service.DefaultCallback;
-import pp.corleone.service.DefaultFetcher;
 import pp.corleone.service.DefaultRequestWrapper;
 import pp.corleone.service.DefaultRequestWrapper.PriorityEnum;
 import pp.corleone.service.DefaultResponseWrapper;
@@ -69,9 +70,8 @@ public class Auto51ChangeCityCallback extends DefaultCallback {
 		ici.setSellerType(sellerType.getCode());
 		ici.setCityName(locate);
 
-		this.getLogger().debug(
-				" sellertype " + ici.getSellerType() + ";locate:"
-						+ ici.getCityName());
+		Log.debug(" sellertype " + ici.getSellerType() + ";locate:"
+				+ ici.getCityName());
 
 		if (Auto51SellerType.INDIVIDUAL == sellerType) {
 			// individual
@@ -80,14 +80,15 @@ public class Auto51ChangeCityCallback extends DefaultCallback {
 							.getResponseWrapper().getReferRequestWrapper(),
 					PriorityEnum.LIST);
 			per.getContext().put(Auto51Constant.CAR_INFO, ici);
-			per.getContext().put(Auto51Constant.BUILD_ALL_PAGE, "1");
-			DefaultFetcher fetcher = (DefaultFetcher) Auto51Constant
+
+			Auto51ListFetcher fetcher = (Auto51ListFetcher) Auto51Constant
 					.getInstance().getBean("auto51ListFetcher");
 
 			per.setTimeout(20000);
-
 			fetcher.setRequestWrapper(per);
 
+			fetcher.getRequestWrapper().getContext()
+					.put(Auto51Constant.FIRST_PAGE, true);
 			return fetcher;
 		} else if (Auto51SellerType.SHOP == sellerType) {
 			// shop
@@ -96,13 +97,15 @@ public class Auto51ChangeCityCallback extends DefaultCallback {
 							.getResponseWrapper().getReferRequestWrapper(),
 					PriorityEnum.LIST);
 			shop.getContext().put(Auto51Constant.CAR_INFO, ici);
-			shop.getContext().put(Auto51Constant.BUILD_ALL_PAGE, "1");
 
-			DefaultFetcher fetcher = (DefaultFetcher) Auto51Constant
+			Auto51ListFetcher fetcher = (Auto51ListFetcher) Auto51Constant
 					.getInstance().getBean("auto51ListFetcher");
 			shop.setTimeout(20000);
-
 			fetcher.setRequestWrapper(shop);
+
+			fetcher.getRequestWrapper().getContext()
+					.put(Auto51Constant.FIRST_PAGE, true);
+
 			return fetcher;
 		}
 		return null;
@@ -133,8 +136,7 @@ public class Auto51ChangeCityCallback extends DefaultCallback {
 		Map<String, String> cityUrlMap = auto51ChangeCityExtracter
 				.buildCityUrlMap(doc, this.getCities());
 
-		this.getLogger().info(
-				"total fetcher " + cityUrlMap.size() + " cities to crawl ");
+		Log.info("total fetcher " + cityUrlMap.size() + " cities to crawl ");
 
 		fetchers.addAll(this.buildAllFetchers(cityUrlMap));
 		Map<String, Collection<?>> resultMap = new HashMap<String, Collection<?>>();

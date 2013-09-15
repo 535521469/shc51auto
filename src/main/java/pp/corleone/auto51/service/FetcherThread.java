@@ -5,18 +5,12 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import pp.corleone.Log;
 import pp.corleone.service.Callback;
 import pp.corleone.service.Fetcher;
 import pp.corleone.service.ResponseWrapper;
 
 public class FetcherThread extends Thread {
-
-	protected final Logger getLogger() {
-		return LoggerFactory.getLogger(this.getClass());
-	}
 
 	@Override
 	public void run() {
@@ -30,31 +24,26 @@ public class FetcherThread extends Thread {
 
 		while (!isInterrupted()) {
 			try {
-
+				// in fetcher carry thread
 				fetcher = Auto51Resource.fetchQueue.poll(fetcher_idle_sleep,
 						TimeUnit.SECONDS);
 				if (null == fetcher) {
-					getLogger().info("non fetchable ...");
+					Log.info("non fetchable ...");
 					continue;
 				}
 
 				if (fetcher.getRequestWrapper().getReferRequestWrappers()
 						.size() > 0) {
 
-					getLogger().debug(
-							"fetch priority "
-									+ fetcher.getRequestWrapper().getPriority()
-									+ " "
-									+ fetcher.getRequestWrapper().getUrl()
-									+ " refer to "
-									+ fetcher.getRequestWrapper()
-											.getLastRequestUrl());
+					Log.debug("fetch priority "
+							+ fetcher.getRequestWrapper().getPriority() + " "
+							+ fetcher.getRequestWrapper().getUrl()
+							+ " refer to "
+							+ fetcher.getRequestWrapper().getLastRequestUrl());
 				} else {
-					getLogger().debug(
-							"fetch priority "
-									+ fetcher.getRequestWrapper().getPriority()
-									+ " "
-									+ fetcher.getRequestWrapper().getUrl());
+					Log.debug("fetch priority "
+							+ fetcher.getRequestWrapper().getPriority() + " "
+							+ fetcher.getRequestWrapper().getUrl());
 				}
 
 				Future<ResponseWrapper> fu = pe.submit(fetcher);
@@ -70,27 +59,24 @@ public class FetcherThread extends Thread {
 							offeredFlag = Auto51Resource.extractQueue.offer(cb,
 									500, TimeUnit.MILLISECONDS);
 
-							getLogger().debug(
-									"offer callback "
-											+ cb.getClass()
-											+ " refer to "
-											+ cb.getResponseWrapper()
-													.getReferRequestWrapper()
-													.getUrl());
+							Log.debug("offer callback "
+									+ cb.getClass()
+									+ " refer to "
+									+ cb.getResponseWrapper()
+											.getReferRequestWrapper().getUrl());
 
 						} while (!offeredFlag);
 					} else {
-						getLogger().debug(
-								"ignore fetch :"
-										+ fetcher.getRequestWrapper().getUrl());
+						Log.debug("ignore fetch :"
+								+ fetcher.getRequestWrapper().getUrl());
 					}
 				} catch (ExecutionException e) {
-					e.printStackTrace();
+					Log.error("in FetcherThread run ", e);
 					continue;
 				}
 
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				Log.error("in FetcherThread run ", e);
 			}
 
 			int FETCHER_SLEEP_MILLISECOND = Auto51Constant.getInstance()
@@ -101,7 +87,7 @@ public class FetcherThread extends Thread {
 				try {
 					TimeUnit.MILLISECONDS.sleep(FETCHER_SLEEP_MILLISECOND);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					Log.error("in FetcherThread run ", e);
 				}
 			}
 

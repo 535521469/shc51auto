@@ -30,7 +30,7 @@ public class Auto51SellerExtracterGroovyImpTest {
 			Auto51SellerInfo auto51SellerInfo = new Auto51SellerInfo();
 			auto51CarInfo.setAuto51SellerInfo(auto51SellerInfo);
 			auto51SellerInfo.setShopUrl(shopUrl);
-			auto51SellerExtracter = new Auto51SellerExtracterGroovyImp();
+			auto51SellerExtracter = new Auto51SellerExtracterGroovyImp2();
 			auto51SellerExtracter.fillSellerInfo(doc, auto51SellerInfo);
 		} catch (IOException e) {
 			e.printStackTrace();

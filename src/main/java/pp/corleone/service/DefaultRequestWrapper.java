@@ -55,6 +55,9 @@ public class DefaultRequestWrapper implements RequestWrapper {
 	}
 
 	public Map<String, Object> getContext() {
+		if (null == context) {
+			context = new HashMap<String, Object>();
+		}
 		return context;
 	}
 

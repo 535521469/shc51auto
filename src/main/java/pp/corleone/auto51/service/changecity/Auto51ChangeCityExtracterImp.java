@@ -7,7 +7,9 @@ import java.util.Set;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+@Component("auto51ChangeCityExtracter")
 public class Auto51ChangeCityExtracterImp implements Auto51ChangeCityExtracter {
 
 	@Override

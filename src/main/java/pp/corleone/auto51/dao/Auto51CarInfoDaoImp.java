@@ -61,4 +61,17 @@ public class Auto51CarInfoDaoImp implements Auto51CarInfoDao {
 		query.setParameter("lastActiveDate", lastActiveDateTime);
 		return (List<Auto51CarInfo>) query.getResultList();
 	}
+
+	@Override
+	public List<Auto51CarInfo> listByUrlAndDeclareDate(String url, Date declareDate) {
+		Query query = this.entityManager
+				.createQuery("from Auto51CarInfo as c where c.carSourceUrl=:carSourceUrl and c.declareDate =:declareDate");
+		query.setParameter("carSourceUrl", url);
+		query.setParameter("declareDate", declareDate);
+		
+		@SuppressWarnings("unchecked")
+		List<Auto51CarInfo> auto51CarInfos = (List<Auto51CarInfo>) query
+				.getResultList();
+		return auto51CarInfos;
+	}
 }

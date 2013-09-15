@@ -16,6 +16,7 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pp.corleone.Log;
 import pp.corleone.auto51.StatusRequestWrapper;
 import pp.corleone.auto51.domain.Auto51CarInfo;
 import pp.corleone.auto51.domain.Auto51CarInfo.Auto51StatusCode;
@@ -41,7 +42,7 @@ public class Auto51Service extends Service {
 		Auto51Constant.getInstance();
 
 		Auto51Service is = new Auto51Service();
-		is.getLogger().info("start-------------------");
+		Log.info("start-------------------");
 		String statusCheckFlag = Auto51Constant.getInstance().getProperty(
 				Auto51Constant.STATUS_CHECK_FLAG, "1");
 		String fetchFlag = Auto51Constant.getInstance().getProperty(

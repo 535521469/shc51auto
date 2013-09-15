@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import pp.corleone.Log;
 import pp.corleone.auto51.dao.Auto51SellerInfoDao;
 import pp.corleone.auto51.domain.Auto51SellerInfo;
 import pp.corleone.auto51.service.Auto51Constant;
@@ -76,7 +77,7 @@ public class Auto51SellerFillCallback extends DefaultCallback {
 			this.auto51SellerExtracter.fillSellerInfo(doc, existSeller);
 		}
 
-		getLogger().info(
+		Log.info(
 				"fill selelr info..." + existSeller.getSeqID() + ","
 						+ existSeller.getShopName());
 

@@ -26,7 +26,7 @@ public class Auto51DetailDeclareDateExtracterGroovyImpTest {
 			doc = Jsoup.connect(url).get();
 			auto51CarInfo = new Auto51CarInfo();
 			auto51CarInfo.setCarSourceUrl(url);
-			auto51DetailDeclareDateExtracter = new Auto51DetailDeclareDateExtracterGroovyImp();
+			auto51DetailDeclareDateExtracter = new Auto51DetailDeclareDateExtracterGroovyImp2();
 		} catch (IOException e) {
 			e.printStackTrace();
 			fail("set up , connection fail");

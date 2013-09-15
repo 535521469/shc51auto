@@ -2,16 +2,10 @@ package pp.corleone.auto51.service;
 
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import pp.corleone.Log;
 import pp.corleone.service.Fetcher;
 
 public class StatusThread extends Thread {
-
-	protected final Logger getLogger() {
-		return LoggerFactory.getLogger(this.getClass());
-	}
 
 	@Override
 	public void run() {
@@ -26,12 +20,13 @@ public class StatusThread extends Thread {
 
 		while (!isInterrupted()) {
 
+			// in status carry thread
 			try {
 				fetcher = Auto51Resource.fetchQueue.poll(
 						status_carrier_idle_sleep, TimeUnit.SECONDS);
 
 				if (null == fetcher) {
-					getLogger().info(
+					Log.info(
 							"not reach check time, queue size :"
 									+ Auto51Resource.fetchQueue.size());
 					continue;
@@ -48,7 +43,7 @@ public class StatusThread extends Thread {
 					offered = Auto51Resource.fetchQueue.offer(fetcher, 5,
 							TimeUnit.SECONDS);
 
-					getLogger().debug(
+					Log.debug(
 							"offer status fetcher "
 									+ fetcher.getRequestWrapper()
 											.getUrl());

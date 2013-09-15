@@ -28,7 +28,7 @@ public class Auto51DetailExtracterGroovyImpTest {
 			fail("set up , connection fail");
 			e.printStackTrace();
 		}
-		auto51DetailExtracter = new Auto51DetailExtracterGroovyImp();
+		auto51DetailExtracter = new Auto51DetailExtracterGroovyImp2();
 		auto51CarInfo = auto51DetailExtracter.getCarInfo(doc);
 	}
 

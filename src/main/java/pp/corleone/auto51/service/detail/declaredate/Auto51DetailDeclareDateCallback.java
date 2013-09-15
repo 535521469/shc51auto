@@ -3,6 +3,7 @@ package pp.corleone.auto51.service.detail.declaredate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jsoup.nodes.Document;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import pp.corleone.Log;
 import pp.corleone.auto51.dao.Auto51CarInfoDao;
 import pp.corleone.auto51.dao.Auto51SellerInfoDao;
 import pp.corleone.auto51.domain.Auto51CarInfo;
@@ -32,6 +34,8 @@ import pp.corleone.service.RequestWrapper;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class Auto51DetailDeclareDateCallback extends DefaultCallback {
 
+	
+	
 	public Auto51DetailDeclareDateCallback() {
 	}
 
@@ -118,15 +122,34 @@ public class Auto51DetailDeclareDateCallback extends DefaultCallback {
 		Auto51CarInfo auto51CarInfo = this.getCarInfoInContext();
 		auto51DetailDeclareDateExtracter.fillDeclareDate(doc, auto51CarInfo);
 
-		if (auto51CarInfo.getAuto51SellerInfo() != null
-				&& auto51CarInfo.getAuto51SellerInfo().getShopUrl() != null) {
-			Fetcher fetcher = this.buildSellerFetcher(auto51CarInfo
-					.getAuto51SellerInfo().getShopUrl());
-			fetchers.add(fetcher);
-		} else {
+		if (null == auto51CarInfo.getDeclareDate()) {
+			Exception e = new RuntimeException("declare date is null:"
+					+ auto51CarInfo.getCarSourceUrl());
+			Log.error("", e);
+			throw e;
+		}
 
-			this.auto51CarInfoDao.persist(auto51CarInfo);
-			getLogger().info("save ..." + auto51CarInfo.getSeqID());
+		List<Auto51CarInfo> existCars = auto51CarInfoDao
+				.listByUrlAndDeclareDate(auto51CarInfo.getCarSourceUrl(),
+						auto51CarInfo.getDeclareDate());
+
+		if (null == existCars || existCars.isEmpty()) {
+
+			if (auto51CarInfo.getAuto51SellerInfo() != null
+					&& auto51CarInfo.getAuto51SellerInfo().getShopUrl() != null) {
+				Fetcher fetcher = this.buildSellerFetcher(auto51CarInfo
+						.getAuto51SellerInfo().getShopUrl());
+				fetchers.add(fetcher);
+			} else {
+
+				this.auto51CarInfoDao.persist(auto51CarInfo);
+				Log.info("save ..." + auto51CarInfo.getSeqID());
+			}
+
+		} else {
+			Log.info("ignore exist car:"
+					+ auto51CarInfo.getDeclareDate() + ">>"
+					+ auto51CarInfo.getCarSourceUrl());
 		}
 
 		return fetched;

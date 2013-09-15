@@ -40,11 +40,9 @@ public class Auto51SellerExtracterGroovyImpTest4 {
 	public void fillSellerInfo() {
 		Auto51SellerInfo auto51SellerInfo = auto51CarInfo.getAuto51SellerInfo();
 
-		 System.out.println(auto51SellerInfo.getShopAddress());
-		 System.out.println("浙江省杭州市临平藕花洲大街西段151号");
-
-		assertEquals("浙江省杭州市临平藕花洲大街西段151号",
-				auto51SellerInfo.getShopAddress());
+		System.out.println(auto51SellerInfo.getShopAddress());
+		System.out.println("浙江省杭州市临平藕花洲大街西段151号");
+		assertEquals("浙江省杭州市临平藕花洲大街西段151号", auto51SellerInfo.getShopAddress());
 		assertEquals("0571-89366060", auto51SellerInfo.getContactPhone());
 		assertEquals("方志强", auto51SellerInfo.getContacter());
 	}

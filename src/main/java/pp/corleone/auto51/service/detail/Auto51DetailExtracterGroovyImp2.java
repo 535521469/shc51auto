@@ -89,7 +89,7 @@ class Auto51DetailExtracterGroovyImp2 implements Auto51DetailExtracter {
 			String brand = doc
 					.select("div.daohang>a[href^=http://www.51auto.com/search/s-]")
 					.first().text();
-			brand = brand.replace("二手", "");
+			brand = brand.replace("浜屾墜", "");
 			auto51CarInfo.setBrand(brand);
 		} catch (Exception e) {
 			e.printStackTrace();

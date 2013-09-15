@@ -13,6 +13,8 @@ public interface Auto51CarInfoDao {
 
 	public List<Auto51CarInfo> listByUrl(String url);
 
+	public List<Auto51CarInfo> listByUrlAndDeclareDate(String url, Date declareDate);
+
 	public EntityManager getEntityManager();
 
 	public void persist(Auto51CarInfo auto51CarInfo);
