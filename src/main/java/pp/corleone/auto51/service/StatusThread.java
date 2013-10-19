@@ -33,7 +33,7 @@ public class StatusThread extends Thread {
 				}
 
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				Log.error("",e);
 			}
 
 			boolean offered = false;
@@ -49,7 +49,7 @@ public class StatusThread extends Thread {
 											.getUrl());
 
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					Log.error("",e);
 				}
 			} while (!offered);
 

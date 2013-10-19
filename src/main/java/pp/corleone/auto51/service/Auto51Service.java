@@ -183,7 +183,7 @@ public class Auto51Service extends Service {
 				Fetcher f = this.buildChangeCityFetcher(cities);
 				fs.add(f);
 			} catch (Exception e) {
-				e.printStackTrace();
+				Log.error("",e);
 			}
 
 			// add to queue
@@ -198,7 +198,7 @@ public class Auto51Service extends Service {
 						offeredFlag = Auto51Resource.fetchQueue.offer(fetcher,
 								500, TimeUnit.MILLISECONDS);
 					} catch (InterruptedException e) {
-						e.printStackTrace();
+						Log.error("",e);
 					}
 
 					getLogger().debug(

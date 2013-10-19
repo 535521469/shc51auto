@@ -6,6 +6,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import pp.corleone.Log;
 import pp.corleone.auto51.domain.Auto51CarInfo;
 import pp.corleone.auto51.domain.Auto51CarInfo.Auto51StatusCode;
 import pp.corleone.auto51.domain.Auto51SellerInfo;
@@ -19,7 +20,7 @@ class Auto51DetailExtracterGroovyImp2 implements Auto51DetailExtracter {
 			price = price + "万";
 			auto51CarInfo.setPrice(price);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.error("",e);
 		}
 	}
 
@@ -38,7 +39,7 @@ class Auto51DetailExtracterGroovyImp2 implements Auto51DetailExtracter {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.error("",e);
 		}
 	}
 
@@ -57,7 +58,7 @@ class Auto51DetailExtracterGroovyImp2 implements Auto51DetailExtracter {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.error("",e);
 		}
 	}
 
@@ -73,7 +74,7 @@ class Auto51DetailExtracterGroovyImp2 implements Auto51DetailExtracter {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.error("",e);
 		}
 	}
 
@@ -92,7 +93,7 @@ class Auto51DetailExtracterGroovyImp2 implements Auto51DetailExtracter {
 			brand = brand.replace("浜屾墜", "");
 			auto51CarInfo.setBrand(brand);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.error("",e);
 		}
 	}
 
@@ -105,7 +106,7 @@ class Auto51DetailExtracterGroovyImp2 implements Auto51DetailExtracter {
 				auto51CarInfo.setTitle(title);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.error("",e);
 		}
 	}
 
@@ -125,7 +126,7 @@ class Auto51DetailExtracterGroovyImp2 implements Auto51DetailExtracter {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.error("",e);
 		}
 	}
 

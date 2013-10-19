@@ -132,7 +132,7 @@ public class Auto51DetailCallback extends DefaultCallback {
 			Log.error(
 					"extract detail error,"
 							+ this.getResponseWrapper().getUrl());
-			e.printStackTrace();
+			Log.error("",e);
 			throw e;
 		}
 		this.copyCarValues(auto51CarInfo, aci);

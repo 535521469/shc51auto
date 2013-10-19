@@ -10,6 +10,7 @@ import org.jsoup.nodes.Document;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import pp.corleone.Log;
 import pp.corleone.auto51.domain.Auto51CarInfo;
 import pp.corleone.auto51.domain.Auto51SellerInfo;
 
@@ -31,7 +32,7 @@ public class Auto51SellerExtracterGroovyImpTest4 {
 			auto51SellerExtracter = new Auto51SellerExtracterGroovyImp2();
 			auto51SellerExtracter.fillSellerInfo(doc, auto51SellerInfo);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.error("",e);
 			fail("set up , connection fail");
 		}
 	}

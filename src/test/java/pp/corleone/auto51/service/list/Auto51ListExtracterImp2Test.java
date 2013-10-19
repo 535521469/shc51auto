@@ -11,6 +11,8 @@ import org.jsoup.nodes.Document;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import pp.corleone.Log;
+
 public class Auto51ListExtracterImp2Test {
 	private static Auto51ListExtracter extracter;
 	private static Document doc;
@@ -22,7 +24,7 @@ public class Auto51ListExtracterImp2Test {
 			doc = Jsoup.connect(url).get();
 			extracter = new Auto51ListExtracterImp2();
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.error("",e);
 			fail("set up , connection fail");
 		}
 	}

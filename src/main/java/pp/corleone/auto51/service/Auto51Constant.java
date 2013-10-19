@@ -8,6 +8,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
+import pp.corleone.Log;
+
 public class Auto51Constant {
 
 	private Properties properties;

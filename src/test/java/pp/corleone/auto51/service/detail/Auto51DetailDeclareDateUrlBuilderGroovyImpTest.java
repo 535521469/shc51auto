@@ -10,6 +10,7 @@ import org.jsoup.nodes.Document;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import pp.corleone.Log;
 import pp.corleone.auto51.domain.Auto51CarInfo;
 
 public class Auto51DetailDeclareDateUrlBuilderGroovyImpTest {
@@ -27,7 +28,7 @@ public class Auto51DetailDeclareDateUrlBuilderGroovyImpTest {
 			auto51CarInfo.setCarSourceUrl(url);
 			auto51DetailDeclareDateUrlBuilder = new Auto51DetailDeclareDateUrlBuilderGroovyImp2();
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.error("",e);
 			fail("set up , connection fail");
 		}
 	}

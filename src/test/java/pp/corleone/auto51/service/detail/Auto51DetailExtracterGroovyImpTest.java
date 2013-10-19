@@ -10,6 +10,7 @@ import org.jsoup.nodes.Document;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import pp.corleone.Log;
 import pp.corleone.auto51.domain.Auto51CarInfo;
 
 public class Auto51DetailExtracterGroovyImpTest {
@@ -26,7 +27,7 @@ public class Auto51DetailExtracterGroovyImpTest {
 					.get();
 		} catch (IOException e) {
 			fail("set up , connection fail");
-			e.printStackTrace();
+			Log.error("",e);
 		}
 		auto51DetailExtracter = new Auto51DetailExtracterGroovyImp2();
 		auto51CarInfo = auto51DetailExtracter.getCarInfo(doc);

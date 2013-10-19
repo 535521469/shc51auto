@@ -90,7 +90,7 @@ public class ExtractThread extends Thread {
 				try {
 					TimeUnit.MILLISECONDS.sleep(1);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					Log.error("",e);
 				}
 			} else {
 				try {
@@ -108,7 +108,7 @@ public class ExtractThread extends Thread {
 					try {
 						result = f.get(10, TimeUnit.SECONDS);
 					} catch (ExecutionException e) {
-						e.printStackTrace();
+						Log.error("",e);
 						Log.error("extract error :"
 								+ cb.getResponseWrapper().getUrl()
 								+ ",extracter:" + cb.getClass().getName());
@@ -151,7 +151,7 @@ public class ExtractThread extends Thread {
 					this.logIgnored(ignored);
 
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					Log.error("",e);
 				}
 
 			}
