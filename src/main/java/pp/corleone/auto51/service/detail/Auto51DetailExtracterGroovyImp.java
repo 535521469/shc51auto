@@ -260,28 +260,42 @@ class Auto51DetailExtracterGroovyImp implements Auto51DetailExtracter {
 		Auto51SellerInfo auto51SellerInfo = new Auto51SellerInfo();
 		Element pElement = doc.select("dl.sm_dl").first();
 		String shopName = "";
-		if (pElement != null) {
-			Element shopElement = pElement.select("a.a_ktit").first();
-			shopName = shopElement.text();
-			auto51SellerInfo.setShopName(shopName);
-			auto51SellerInfo.setShopUrl(shopElement.attr("href"));
+		if (pElement == null) {
+			// do nothing
 		} else {
-			Element btn_shop = doc.select("a.btn_shop").first();
-			if (btn_shop != null) {
-				String shopUrl = btn_shop.attr("href");
-				// auto51SellerInfo.setShopUrl(shopUrl);
-				String zhuanqv = "http://www.51auto.com/hclist__HAPU__";
-				if (shopUrl.startsWith(zhuanqv)) {
-					String carID = shopUrl.substring(zhuanqv.length(),
-							shopUrl.indexOf("_UI__"));
+			Element shopElement = pElement.select("a.a_ktit").first();
+			if (shopElement == null) {
+				Element btn_shop = doc.select("a.btn_shop").first();
+				if (btn_shop == null) {
+					// jing xiao shang
+					Element shopNameElement = pElement.select("dt").first()
+							.select("span").first();
+					shopName = shopNameElement.text();
+					auto51SellerInfo.setShopName(shopName);
 					auto51SellerInfo
-							.setShopUrl("http://www.51auto.com/control/HappyDealersList?p=p&zoneID=-1&zoneID=-1&happyUserId="
-									+ carID
-									+ "&sort=-1&level=-1&page=1&keyWord="
-									+ auto51SellerInfo.getShopName());
+							.setShopUrl("http://www.51auto.com/control/FindDealerList?dealerType=&pageNo=&brand=&Clear=Clear&provinceId=&zoneId=&dealerName="
+									+ shopName);
 				} else {
-					auto51SellerInfo.setShopUrl(shopUrl);
+					String shopUrl = btn_shop.attr("href");
+					// auto51SellerInfo.setShopUrl(shopUrl);
+					String zhuanqv = "http://www.51auto.com/hclist__HAPU__";
+					if (shopUrl.startsWith(zhuanqv)) {
+						String carID = shopUrl.substring(zhuanqv.length(),
+								shopUrl.indexOf("_UI__"));
+						auto51SellerInfo
+								.setShopUrl("http://www.51auto.com/control/HappyDealersList?p=p&zoneID=-1&zoneID=-1&happyUserId="
+										+ carID
+										+ "&sort=-1&level=-1&page=1&keyWord="
+										+ auto51SellerInfo.getShopName());
+					} else {
+						auto51SellerInfo.setShopUrl(shopUrl);
+					}
+
 				}
+			} else {
+				shopName = shopElement.text();
+				auto51SellerInfo.setShopName(shopName);
+				auto51SellerInfo.setShopUrl(shopElement.attr("href"));
 			}
 		}
 
