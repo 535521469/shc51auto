@@ -6,7 +6,6 @@ import org.jsoup.select.Elements;
 
 import pp.corleone.auto51.domain.Auto51SellerInfo;
 
-//@Component("auto51SellerExtracter")
 public class Auto51SellerExtracterGroovyImp2 implements Auto51SellerExtracter {
 
 	@Override

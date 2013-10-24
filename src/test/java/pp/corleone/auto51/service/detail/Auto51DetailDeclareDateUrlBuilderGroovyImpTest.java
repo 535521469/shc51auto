@@ -26,7 +26,7 @@ public class Auto51DetailDeclareDateUrlBuilderGroovyImpTest {
 			doc = Jsoup.connect(url).get();
 			auto51CarInfo = new Auto51CarInfo();
 			auto51CarInfo.setCarSourceUrl(url);
-			auto51DetailDeclareDateUrlBuilder = new Auto51DetailDeclareDateUrlBuilderGroovyImp2();
+			auto51DetailDeclareDateUrlBuilder = new Auto51DetailDeclareDateUrlBuilderGroovyImp();
 		} catch (IOException e) {
 			Log.error("",e);
 			fail("set up , connection fail");

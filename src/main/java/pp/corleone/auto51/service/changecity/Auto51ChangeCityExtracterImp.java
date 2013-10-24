@@ -43,7 +43,7 @@ public class Auto51ChangeCityExtracterImp implements Auto51ChangeCityExtracter {
 				LoggerFactory.getLogger(this.getClass()).info(
 						"get " + cityName + " " + url);
 				cityUrlMap.put(cityName, url);
-				continue;
+//				break;
 			}
 		}
 		return cityUrlMap;

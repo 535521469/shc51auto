@@ -7,11 +7,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import pp.corleone.Log;
 import pp.corleone.auto51.dao.Auto51CarInfoDao;
 import pp.corleone.auto51.domain.Auto51CarInfo;
 import pp.corleone.auto51.service.Auto51Constant;
 import pp.corleone.service.DefaultFetcher;
 import pp.corleone.service.RequestWrapper;
+import pp.corleone.service.ResponseWrapper;
 
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Component("auto51ListFetcher")
@@ -43,6 +45,10 @@ public class Auto51ListFetcher extends DefaultFetcher {
 		super(requestWrapper);
 	}
 
-
+	@Override
+	public ResponseWrapper call() throws InterruptedException {
+		Log.info(">>> list page :" + this.getRequestWrapper().getUrl());
+		return super.call();
+	}
 
 }

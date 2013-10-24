@@ -22,7 +22,7 @@ public class Auto51DetailExtracterGroovyImpTest {
 	@BeforeClass
 	public static void beforeClass() {
 		try {
-			doc = Jsoup.connect("http://www.51auto.com/buycar/1881679.html")
+			doc = Jsoup.connect("http://www.51auto.com/buycar/1835582.html")
 					.get();
 		} catch (IOException e) {
 			fail("set up , connection fail");
@@ -71,8 +71,8 @@ public class Auto51DetailExtracterGroovyImpTest {
 
 	@Test
 	public void testfillManufacturerAndBrand() {
-		assertEquals("北斗星", auto51CarInfo.getBrand());
-		assertEquals("昌河铃木", auto51CarInfo.getManufacturer());
+		assertEquals("福克斯", auto51CarInfo.getBrand());
+		assertEquals("长安福特", auto51CarInfo.getManufacturer());
 	}
 
 	@Test
