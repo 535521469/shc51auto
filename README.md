@@ -1,6 +1,10 @@
 shc51auto
 =========
 
+[2013-11-01 v0.0.10_ongoing]
+1.修改callback队列为PriorityblockingQueue
+2.增加忽略补抓不完整商户的配置
+
 [2013-10-19 v0.0.5_ongoing]
 1、发布时间改成1天前，22小时前，之类的信息。
 
