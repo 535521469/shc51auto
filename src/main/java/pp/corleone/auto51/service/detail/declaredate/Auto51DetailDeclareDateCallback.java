@@ -111,6 +111,7 @@ public class Auto51DetailDeclareDateCallback extends DefaultCallback {
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public Map<String, Collection<?>> call() throws Exception {
+		
 		Map<String, Collection<?>> fetched = new HashMap<String, Collection<?>>();
 
 		Collection<Fetcher> fetchers = new ArrayList<Fetcher>();
@@ -120,6 +121,7 @@ public class Auto51DetailDeclareDateCallback extends DefaultCallback {
 				.getDoc();
 
 		Auto51CarInfo auto51CarInfo = this.getCarInfoInContext();
+		Log.debug("<<<<<< in declaredate callback ,"+auto51CarInfo.getCarSourceUrl());
 		auto51DetailDeclareDateExtracter.fillDeclareDate(doc, auto51CarInfo);
 
 		if (null == auto51CarInfo.getDeclareDate()) {

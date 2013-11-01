@@ -3,7 +3,6 @@ package pp.corleone.auto51.service;
 import java.util.Comparator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -25,8 +24,22 @@ public class Auto51Resource {
 				}
 			});
 
-	public static BlockingQueue<Callback> extractQueue = new LinkedBlockingQueue<Callback>();
+	public static BlockingQueue<Callback> extractQueue = new PriorityBlockingQueue<Callback>(
+			512, new Comparator<Callback>() {
 
-//	public static BlockingQueue<StatusRequestWrapper> statusQueue = new DelayQueue<StatusRequestWrapper>();
+				@Override
+				public int compare(Callback f1, Callback f2) {
+					return f1.getResponseWrapper().getReferRequestWrapper()
+							.getPriority()
+							- f2.getResponseWrapper().getReferRequestWrapper()
+									.getPriority();
+				}
+			});
+
+	// public static BlockingQueue<Callback> extractQueue = new
+	// LinkedBlockingQueue<Callback>();
+
+	// public static BlockingQueue<StatusRequestWrapper> statusQueue = new
+	// DelayQueue<StatusRequestWrapper>();
 
 }

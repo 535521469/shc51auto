@@ -9,4 +9,5 @@ public interface Callback extends Callable<Map<String, Collection<?>>> {
 	Callback setResponseWrapper(ResponseWrapper responseWrapper);
 
 	ResponseWrapper getResponseWrapper();
+
 }

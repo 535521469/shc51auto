@@ -14,5 +14,4 @@ public abstract class DefaultCallback implements Callback {
 		return this;
 	}
 
-
 }

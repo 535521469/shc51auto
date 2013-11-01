@@ -164,27 +164,33 @@ public class Auto51Service extends Service {
 					.split(",")));
 			List<Fetcher> fs = new ArrayList<Fetcher>();
 
-			try {
-				// add incompleted seller fill fetcher
-				Auto51SellerInCompletedQuery auto51SellerInCompletedQuery = (Auto51SellerInCompletedQuery) Auto51Constant
-						.getInstance().getBean("auto51SellerInCompletedQuery");
-				List<Auto51SellerInfo> auto51SellerInfos = auto51SellerInCompletedQuery
-						.listIncompletedSellers();
-				List<Fetcher> incompletedSellerFetchers = this
-						.buildIncompletedSellerFetcher(auto51SellerInfos);
+			if ("0".equals(Auto51Constant.getInstance().getProperty(
+					Auto51Constant.IGNORE_INCOMPLETE_SELLER, "0"))) {
 
-				this.getLogger().info(
-						"get " + incompletedSellerFetchers.size()
-								+ " incompleted sellers");
+				try {
+					// add incompleted seller fill fetcher
+					Auto51SellerInCompletedQuery auto51SellerInCompletedQuery = (Auto51SellerInCompletedQuery) Auto51Constant
+							.getInstance().getBean(
+									"auto51SellerInCompletedQuery");
+					List<Auto51SellerInfo> auto51SellerInfos = auto51SellerInCompletedQuery
+							.listIncompletedSellers();
+					List<Fetcher> incompletedSellerFetchers = this
+							.buildIncompletedSellerFetcher(auto51SellerInfos);
 
-				fs.addAll(incompletedSellerFetchers);
+					this.getLogger().info(
+							"get " + incompletedSellerFetchers.size()
+									+ " incompleted sellers");
 
-				// add change city fetcher
-				Fetcher f = this.buildChangeCityFetcher(cities);
-				fs.add(f);
-			} catch (Exception e) {
-				Log.error("", e);
+					fs.addAll(incompletedSellerFetchers);
+
+				} catch (Exception e) {
+					Log.error("", e);
+				}
 			}
+
+			// add change city fetcher
+			Fetcher f = this.buildChangeCityFetcher(cities);
+			fs.add(f);
 
 			// add to queue
 			Map<String, Integer> offered = new HashMap<String, Integer>();

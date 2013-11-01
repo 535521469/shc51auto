@@ -145,11 +145,14 @@ class Auto51DetailExtracterGroovyImp implements Auto51DetailExtracter {
 
 			String manufacturerString = "";
 			for (Element manufacturer : manufacturers) {
-				if ("品牌".equals(manufacturer.text())|| "厂商".equals(manufacturer.text())) {
+				if ("品牌".equals(manufacturer.text())
+						|| "厂商".equals(manufacturer.text())) {
 
 					manufacturerString = manufacturer.nextElementSibling()
 							.text();
 					break;
+				} else {
+					Log.debug("text vlaue:" + manufacturer.text());
 				}
 			}
 			auto51CarInfo.setManufacturer(manufacturerString);
