@@ -20,6 +20,14 @@ class Auto51DetailDeclareDateExtracterGroovyImp implements
 	@Override
 	public void fillDeclareDate(Document doc, Auto51CarInfo auto51CarInfo) {
 		try {
+
+			if (doc == null) {
+				Log.info("declare doc is null ");
+			}
+			if (doc.body() == null) {
+				Log.info("declare doc.body is null ");
+			}
+
 			String body = doc.body().text();
 			String scriptString = body.substring(0,
 					body.indexOf("DWREngine._handleResponse"));

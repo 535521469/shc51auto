@@ -65,6 +65,7 @@
 		scope="prototype" />
 	<bean id="auto51SellerInfoDao" class="pp.corleone.auto51.dao.Auto51SellerInfoDaoImp"
 		scope="prototype" />
+	<bean id="httpProxyDao" class="pp.corleone.auto51.dao.HttpProxyDaoImp" />
 
 	<context:component-scan base-package="pp.corleone.auto51.service" />
 	<context:component-scan base-package="pp.corleone.service" />
@@ -73,8 +74,7 @@
 		class="pp.corleone.auto51.service.changecity.Auto51ChangeCityExtracterImp" />
 	<!-- <lang:groovy id="auto51ChangeCityExtracter" script-source="classpath:pp/corleone/auto51/service/changecity/Auto51ChangeCityExtracterGroovyImp.groovy"/> -->
 
-	<bean id="auto51ListExtracter"
-		class="pp.corleone.auto51.service.list.Auto51ListExtracterImp2" />
+	<bean id="auto51ListExtracter" class="pp.corleone.auto51.service.list.Auto51ListExtracterImp2" />
 	<bean id="auto51DetailExtracter"
 		class="pp.corleone.auto51.service.detail.Auto51DetailExtracterGroovyImp" />
 	<bean id="auto51DetailDeclareDateExtracter"
@@ -83,5 +83,6 @@
 		class="pp.corleone.auto51.service.detail.Auto51DetailDeclareDateUrlBuilderGroovyImp" />
 	<bean id="auto51SellerExtracter"
 		class="pp.corleone.auto51.service.seller.Auto51SellerExtracterGroovyImp" />
+	<bean id="proxyGetter" class="pp.corleone.service.DefaultProxyGetter" />
 
 </beans>

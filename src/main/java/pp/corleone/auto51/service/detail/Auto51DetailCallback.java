@@ -128,6 +128,9 @@ public class Auto51DetailCallback extends DefaultCallback {
 		Auto51CarInfo auto51CarInfo;
 		try {
 			auto51CarInfo = auto51DetailExtracter.getCarInfo(doc);
+			
+//			Log.info(doc.toString());
+			
 		} catch (Exception e) {
 			Log.error(
 					"extract detail error,"

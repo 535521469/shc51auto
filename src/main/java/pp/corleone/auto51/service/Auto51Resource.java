@@ -12,7 +12,7 @@ import pp.corleone.service.Fetcher;
 public class Auto51Resource {
 
 	public static ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors
-			.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
+			.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 5);
 
 	public static BlockingQueue<Fetcher> fetchQueue = new PriorityBlockingQueue<Fetcher>(
 			512, new Comparator<Fetcher>() {

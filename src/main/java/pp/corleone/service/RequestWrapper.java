@@ -5,13 +5,12 @@ import java.util.Map;
 
 public interface RequestWrapper {
 
-	
-	
 	public enum MetaEnum {
+		RETRY_TIMES,MAX_RETRY_TIMES,
 	}
 
 	public abstract int getTimeout();
-	
+
 	public abstract String getUrl();
 
 	public abstract Callback getCallback();
