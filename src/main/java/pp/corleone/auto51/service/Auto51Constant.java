@@ -86,6 +86,7 @@ public class Auto51Constant {
 	private static String buildCityUrl(String url) {
 		String city = url.replace(homePage, "");
 //		return homePage + "search/" + city;
+		
 		 return homePage + city;
 	}
 
