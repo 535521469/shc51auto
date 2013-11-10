@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -128,14 +129,18 @@ public class Auto51DetailCallback extends DefaultCallback {
 		Auto51CarInfo auto51CarInfo;
 		try {
 			auto51CarInfo = auto51DetailExtracter.getCarInfo(doc);
-			
-//			Log.info(doc.toString());
-			
+
+			// Log.info(doc.toString());
+
+			if (StringUtils.isBlank(auto51CarInfo.getPrice())) {
+				throw new IllegalArgumentException("price is None -"
+						+ this.getResponseWrapper().getUrl());
+			}
+
 		} catch (Exception e) {
-			Log.error(
-					"extract detail error,"
-							+ this.getResponseWrapper().getUrl());
-			Log.error("",e);
+			Log.error("extract detail error,"
+					+ this.getResponseWrapper().getUrl());
+			Log.error("", e);
 			throw e;
 		}
 		this.copyCarValues(auto51CarInfo, aci);
@@ -152,9 +157,8 @@ public class Auto51DetailCallback extends DefaultCallback {
 					auto51CarInfo.setAuto51SellerInfo(existAuto51SellerInfo);
 				}
 			} else {
-				Log.error(
-						"shop seller type has no seller info,"
-								+ auto51CarInfo.getCarSourceUrl());
+				Log.error("shop seller type has no seller info,"
+						+ auto51CarInfo.getCarSourceUrl());
 				// auto51CarInfo=auto51DetailExtracter.getCarInfo(doc);
 			}
 		}

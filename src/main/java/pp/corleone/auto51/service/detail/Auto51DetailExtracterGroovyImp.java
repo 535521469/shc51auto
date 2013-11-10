@@ -25,7 +25,6 @@ class Auto51DetailExtracterGroovyImp implements Auto51DetailExtracter {
 			auto51CarInfo.setPrice(price);
 		} catch (Exception e) {
 			LogException(doc, "price");
-			Log.info(doc.toString());
 		}
 	}
 

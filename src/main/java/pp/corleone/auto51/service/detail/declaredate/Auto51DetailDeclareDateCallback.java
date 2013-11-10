@@ -122,6 +122,7 @@ public class Auto51DetailDeclareDateCallback extends DefaultCallback {
 
 		Auto51CarInfo auto51CarInfo = this.getCarInfoInContext();
 		Log.debug("<<<<<< in declaredate callback ,"+auto51CarInfo.getCarSourceUrl());
+		
 		auto51DetailDeclareDateExtracter.fillDeclareDate(doc, auto51CarInfo);
 
 		if (null == auto51CarInfo.getDeclareDate()) {

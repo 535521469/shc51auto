@@ -11,8 +11,15 @@ import pp.corleone.service.Fetcher;
 
 public class Auto51Resource {
 
-	public static ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors
-			.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 5);
+	public static ThreadPoolExecutor fetchThreadPool = (ThreadPoolExecutor) Executors
+			.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
+
+	public static ThreadPoolExecutor extractThreadPool = (ThreadPoolExecutor) Executors
+			.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+	// public static ThreadPoolExecutor threadPool = (ThreadPoolExecutor)
+	// Executors
+	// .newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
 
 	public static BlockingQueue<Fetcher> fetchQueue = new PriorityBlockingQueue<Fetcher>(
 			512, new Comparator<Fetcher>() {
@@ -35,11 +42,5 @@ public class Auto51Resource {
 									.getPriority();
 				}
 			});
-
-	// public static BlockingQueue<Callback> extractQueue = new
-	// LinkedBlockingQueue<Callback>();
-
-	// public static BlockingQueue<StatusRequestWrapper> statusQueue = new
-	// DelayQueue<StatusRequestWrapper>();
 
 }

@@ -90,12 +90,12 @@ public class ExtractThread extends Thread {
 				try {
 					TimeUnit.MILLISECONDS.sleep(1);
 				} catch (InterruptedException e) {
-					Log.error("",e);
+					Log.error("", e);
 				}
 			} else {
 				try {
 
-					Future<Map<String, Collection<?>>> f = Auto51Resource.threadPool
+					Future<Map<String, Collection<?>>> f = Auto51Resource.extractThreadPool
 							.submit(cb);
 
 					if (null == f) {
@@ -108,7 +108,7 @@ public class ExtractThread extends Thread {
 					try {
 						result = f.get(10, TimeUnit.SECONDS);
 					} catch (ExecutionException e) {
-						Log.error("",e);
+						Log.error("", e);
 						Log.error("extract error :"
 								+ cb.getResponseWrapper().getUrl()
 								+ ",extracter:" + cb.getClass().getName());
@@ -151,7 +151,7 @@ public class ExtractThread extends Thread {
 					this.logIgnored(ignored);
 
 				} catch (InterruptedException e) {
-					Log.error("",e);
+					Log.error("", e);
 				}
 
 			}

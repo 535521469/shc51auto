@@ -22,7 +22,7 @@ public class Auto51DetailExtracterGroovyImpTest {
 	@BeforeClass
 	public static void beforeClass() {
 		try {
-			doc = Jsoup.connect("http://www.51auto.com/buycar/1875270.html")
+			doc = Jsoup.connect("http://www.51auto.com/buycar/1890954.html")
 					.get();
 		} catch (IOException e) {
 			fail("set up , connection fail");
@@ -49,7 +49,7 @@ public class Auto51DetailExtracterGroovyImpTest {
 
 	@Test
 	public void testfillPrice() {
-		assertEquals("3.50万", auto51CarInfo.getPrice());
+		assertEquals("29.00万", auto51CarInfo.getPrice());
 	}
 
 	@Test

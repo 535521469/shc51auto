@@ -71,40 +71,34 @@ public abstract class DefaultFetcher implements Fetcher {
 			Document doc;
 			HttpProxy hp = proxyGetter.get();
 			try {
-				// doc = Jsoup
-				// .connect(url)
-				// .timeout(this.getRequestWrapper().getTimeout())
-				// .userAgent(
-				// "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.2 Safari/537.36")
-				// .get();
+				 doc = Jsoup
+				 .connect(url)
+				 .timeout(this.getRequestWrapper().getTimeout())
+				 .userAgent(
+				 "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.2 Safari/537.36")
+				 .get();
 
-				Log.debug("use:" + hp.expr() + " crawle " + url);
-
-				URL fetchUrl = new URL(url);
-				Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(
-						hp.getIp(), hp.getPort())); // or whatever your proxy is
-				HttpURLConnection uc = (HttpURLConnection) fetchUrl
-						.openConnection(proxy);
-
-				uc.setRequestProperty(
-						"User-agent",
-						"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.2 Safari/537.36");
-
-				uc.setConnectTimeout(2000);
-				uc.setReadTimeout(2000);
-
-				uc.connect();
-
-				String line = null;
-				StringBuffer tmp = new StringBuffer();
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						uc.getInputStream(), "gbk"));
-				while ((line = in.readLine()) != null) {
-					tmp.append(line);
-				}
-
-				doc = Jsoup.parse(String.valueOf(tmp));
-				doc.setBaseUri(url);
+//				Log.debug("use:" + hp.expr() + " crawle " + url);
+//				URL fetchUrl = new URL(url);
+//				Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(
+//						hp.getIp(), hp.getPort())); // or whatever your proxy is
+//				HttpURLConnection uc = (HttpURLConnection) fetchUrl
+//						.openConnection(proxy);
+//				uc.setRequestProperty(
+//						"User-agent",
+//						"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.2 Safari/537.36");
+//				uc.setConnectTimeout(2000);
+//				uc.setReadTimeout(2000);
+//				uc.connect();
+//				String line = null;
+//				StringBuffer tmp = new StringBuffer();
+//				BufferedReader in = new BufferedReader(new InputStreamReader(
+//						uc.getInputStream(), "gbk"));
+//				while ((line = in.readLine()) != null) {
+//					tmp.append(line);
+//				}
+//				doc = Jsoup.parse(String.valueOf(tmp));
+//				doc.setBaseUri(url);
 
 				rw = new DefaultResponseWrapper(doc, this.requestWrapper);
 			} catch (Exception e) {
@@ -136,11 +130,39 @@ public abstract class DefaultFetcher implements Fetcher {
 		return rw;
 	}
 
+//	@Override
+//	public ResponseWrapper call() throws InterruptedException {
+//		ResponseWrapper rw = null;
+//		rw = this.fetch();
+//		return rw;
+//
+//	}
+	
+	
+
 	@Override
 	public ResponseWrapper call() throws InterruptedException {
-		ResponseWrapper rw = null;
-		rw = this.fetch();
-		return rw;
 
+		DefaultResponseWrapper rw = null;
+		if (!this.isIgnore()) {
+			String url = this.getRequestWrapper().getUrl();
+			Log.debug("crawl " + url);
+			Document doc;
+			try {
+				doc = Jsoup
+						.connect(url)
+						.timeout(this.getRequestWrapper().getTimeout())
+						.userAgent(
+								"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.2 Safari/537.36")
+						.get();
+				rw = new DefaultResponseWrapper(doc, this.requestWrapper);
+			} catch (Exception e) {
+				Log.error("error url :" + url + ",fetcher:"
+						+ this.getClass().getName(), e);
+			}
+
+		}
+		return rw;
 	}
+	
 }

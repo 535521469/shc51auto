@@ -12,27 +12,21 @@ import pp.corleone.Log;
 import pp.corleone.auto51.domain.Auto51CarInfo;
 import sun.org.mozilla.javascript.internal.NativeArray;
 
-//import org.apache.bsf.engines.javascript.JavaScriptEngine;
-
 class Auto51DetailDeclareDateExtracterGroovyImp implements
 		Auto51DetailDeclareDateExtracter {
-
+	
+	final ScriptEngineManager engineManager = new ScriptEngineManager();
+	
 	@Override
 	public void fillDeclareDate(Document doc, Auto51CarInfo auto51CarInfo) {
 		try {
 
-			if (doc == null) {
-				Log.info("declare doc is null ");
-			}
-			if (doc.body() == null) {
-				Log.info("declare doc.body is null ");
-			}
-
 			String body = doc.body().text();
 			String scriptString = body.substring(0,
 					body.indexOf("DWREngine._handleResponse"));
-			ScriptEngine engine = new ScriptEngineManager()
-					.getEngineByExtension("js");
+			
+			ScriptEngine engine = engineManager.getEngineByExtension("js");
+			
 			engine.eval(scriptString);
 			NativeArray obj = (NativeArray) engine.get("s0");
 

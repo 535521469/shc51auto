@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 import org.springframework.stereotype.Repository;
 
@@ -29,13 +30,18 @@ public class HttpProxyDaoImp implements HttpProxyDao {
 	public Collection<HttpProxy> getHttpProxies() {
 
 		Query query = this.entityManager
-				.createQuery("from HttpProxy as hp where hp.validFlag =:validFlag and fetchDate = :fetchDate ");
+				.createQuery("from HttpProxy as hp where hp.validFlag =:validFlag and fetchDate between :start and :end");
 		query.setParameter("validFlag", HttpProxy.ValidFlagEnum.Valid.getCode());
-		Calendar c = Calendar.getInstance();
-		c.set(Calendar.HOUR, 0);
-		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.SECOND, 0);
-		query.setParameter("fetchDate", c.getTime());
+		Calendar start = Calendar.getInstance();
+		start.set(Calendar.HOUR, 0);
+		start.set(Calendar.MINUTE, 0);
+		start.set(Calendar.SECOND, 0);
+		query.setParameter("start", start.getTime(), TemporalType.TIMESTAMP);
+		Calendar end = Calendar.getInstance();
+		end.set(Calendar.HOUR, 23);
+		end.set(Calendar.MINUTE, 59);
+		end.set(Calendar.SECOND, 59);
+		query.setParameter("end", end.getTime(), TemporalType.TIMESTAMP);
 		@SuppressWarnings("unchecked")
 		List<HttpProxy> httpProxies = query.getResultList();
 		return httpProxies;

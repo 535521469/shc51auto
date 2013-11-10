@@ -15,7 +15,7 @@ public class FetcherThread extends Thread {
 	@Override
 	public void run() {
 
-		ThreadPoolExecutor pe = Auto51Resource.threadPool;
+		ThreadPoolExecutor pe = Auto51Resource.fetchThreadPool;
 
 		Fetcher fetcher = null;
 
