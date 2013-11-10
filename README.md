@@ -1,6 +1,13 @@
 shc51auto
 =========
 
+[2013-11-10 v0.0.12_ongoing]
+1.增加使用代理抓取的逻辑，但是没有使用代理
+2.线程池拆分成fetcher线程池和extracter线程池
+3.价格如果没有抓到，将抛出异常
+4.脚本管理对象公用
+5.路径修改，去掉search/
+
 [2013-11-01 v0.0.10_ongoing]
 1.修改callback队列为PriorityblockingQueue
 2.增加忽略补抓不完整商户的配置

@@ -8,8 +8,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
-import pp.corleone.Log;
-
 public class Auto51Constant {
 
 	private Properties properties;
@@ -68,6 +66,8 @@ public class Auto51Constant {
 	public final static String STATUS_CHECK_FLAG = "status_check_flag";
 	public final static String ONGOING_CYCLE_DELAY = "ongoing_cycle_delay";
 
+	public final static String IGNORE_INCOMPLETE_SELLER = "ignore_imcomplete_seller";
+
 	public final static String FETCHER_IDLE_SLEEP = "fetcher_idle_sleep";
 	public final static String STATUS_CARRIER_IDLE_SLEEP = "status_carrIer_idle_sleep";
 
@@ -81,19 +81,20 @@ public class Auto51Constant {
 	public final static String SELLER_INFO = "SELLER_INFO";
 	public final static String FIRST_PAGE = "FIRST_PAGE";
 
-//	public final static String BUILD_ALL_PAGE = "BUILD_ALL_PAGE";
-	
+	// public final static String BUILD_ALL_PAGE = "BUILD_ALL_PAGE";
+
 	private static String buildCityUrl(String url) {
 		String city = url.replace(homePage, "");
-		return homePage + "search/" + city;
+//		return homePage + "search/" + city;
+		 return homePage + city;
 	}
 
 	public static String buildShopUrl(String url) {
-		return buildCityUrl(url) + "pabmdcig3f?ordering=publishTime&page=1";
+		return buildCityUrl(url) + "pabmdcig3f/?ordering=publishTime&page=1";
 	}
 
 	public static String buildPersonalUrl(String url) {
-		return buildCityUrl(url) + "pabmdcig2f?ordering=publishTime&page=1";
+		return buildCityUrl(url) + "pabmdcig2f/?ordering=publishTime&page=1";
 	}
 
 }

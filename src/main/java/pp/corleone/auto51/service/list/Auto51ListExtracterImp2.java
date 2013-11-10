@@ -30,7 +30,9 @@ public class Auto51ListExtracterImp2 implements Auto51ListExtracter {
 							detailUrl.indexOf("http://www.51auto.com/buycar/"),
 							detailUrl.length()).replace("h_", "");
 					detailUrls.add(url);
-					Log.debug(detailUrl + "-->" + url);
+					if (!detailUrl.equals(url)) {
+						Log.debug(detailUrl + "-->" + url);
+					}
 				}
 			}
 		}

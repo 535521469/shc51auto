@@ -109,14 +109,6 @@ public class Auto51Service extends Service {
 					.getInstance().getBean("auto51ChangeCityCallback");
 			callback.setCities(cities);
 
-			// DefaultRequestWrapper drw = (DefaultRequestWrapper)
-			// Auto51Constant
-			// .getInstance().getBean("defaultRequestWrapper");
-			// drw.setUrl(Auto51Constant.homePage + "morecity.htm");
-			// drw.setCallback(callback);
-			// drw.setPriority(PriorityEnum.CHANGE_CITY.getValue());
-			// drw.setTimeout(30000);
-
 			DefaultRequestWrapper drw = new DefaultRequestWrapper(
 					Auto51Constant.homePage + "morecity.htm", callback, null,
 					PriorityEnum.CHANGE_CITY);
